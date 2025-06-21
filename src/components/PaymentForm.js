@@ -17,7 +17,7 @@ function PaymentForm() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch('http://18.206.127.103:8080/api/payments', {
+            const response = await fetch('http://3.86.198.151:8080/api/payments', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
