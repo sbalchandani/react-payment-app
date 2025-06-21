@@ -4,19 +4,34 @@ function PaymentForm() {
     const [form, setForm] = useState({
         name: "",
         address: "",
-        amount: "",
-        cardNumber: "",
+        creditCardNumber: "",
         expiry: "",
-        cvc: ""
+        cvv: "",
+        amount: ""
     });
 
     const handleChange = (e) => {
         setForm({ ...form, [e.target.name]: e.target.value });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        alert("Payment submitted!");
+        try {
+            const response = await fetch('http://18.206.127.103:8080/api/payments', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(form),
+            });
+            if (response.ok) {
+                alert('Payment submitted!');
+            } else {
+                alert('Payment failed.');
+            }
+        } catch (error) {
+            alert('Error submitting payment.');
+        }
         // Here you would handle form submission (e.g., send to backend)
     };
 
@@ -71,8 +86,8 @@ function PaymentForm() {
                         Card Number:<br />
                         <input
                             type="text"
-                            name="cardNumber"
-                            value={form.cardNumber}
+                            name="creditCardNumber"
+                            value={form.creditCardNumber}
                             onChange={handleChange}
                             required
                             maxLength={16}
@@ -101,8 +116,8 @@ function PaymentForm() {
                         CVC:<br />
                         <input
                             type="text"
-                            name="cvc"
-                            value={form.cvc}
+                            name="cvv"
+                            value={form.cvv}
                             onChange={handleChange}
                             required
                             maxLength={4}
